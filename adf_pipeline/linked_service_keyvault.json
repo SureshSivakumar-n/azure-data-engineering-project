@@ -1,0 +1,7 @@
+{
+  "name": "AzureKeyVault_LinkedService",
+  "type": "AzureKeyVault",
+  "typeProperties": {
+    "baseUrl": "https://keyvault-demo.vault.azure.net/"
+  }
+}

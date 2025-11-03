@@ -1,0 +1,38 @@
+{
+  "name": "SQL_to_Bronze_Pipeline",
+  "activities": [
+    {
+      "name": "Lookup_Table_List",
+      "type": "Lookup",
+      "typeProperties": {
+        "source": {
+          "type": "SqlSource",
+          "sqlReaderQuery": "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
+        },
+        "dataset": { "referenceName": "SQL_Source_Dataset" }
+      }
+    },
+    {
+      "name": "ForEach_Table",
+      "type": "ForEach",
+      "typeProperties": {
+        "items": "@activity('Lookup_Table_List').output.value",
+        "activities": [
+          {
+            "name": "Copy_SQL_to_ADLS",
+            "type": "Copy",
+            "inputs": [{ "referenceName": "SQL_Source_Dataset" }],
+            "outputs": [{ "referenceName": "ADLS_Bronze_Dataset" }],
+            "typeProperties": {
+              "source": { "type": "SqlSource" },
+              "sink": {
+                "type": "ParquetSink",
+                "storeSettings": { "type": "AzureBlobFSWriteSettings" }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

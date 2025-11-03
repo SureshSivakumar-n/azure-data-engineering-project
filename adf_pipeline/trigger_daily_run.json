@@ -1,0 +1,14 @@
+{
+  "type": "ScheduleTrigger",
+  "name": "Daily_ETL_Trigger",
+  "recurrence": {
+    "frequency": "Day",
+    "interval": 1,
+    "startTime": "2025-10-30T07:00:00Z"
+  },
+  "pipelines": [
+    {
+      "pipelineReference": { "referenceName": "SQL_to_Bronze_Pipeline" }
+    }
+  ]
+}
